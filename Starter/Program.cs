@@ -121,7 +121,7 @@ do
                     Console.WriteLine();
                     for (int j = 0; j < 7; j++)
                     {
-                        Console.WriteLine(ourAnimals[i, j]);
+                        Console.WriteLine(ourAnimals[i, j].ToString());
                     }
                 }
             }
@@ -132,7 +132,42 @@ do
 
         case "2":
             // Display all dogs with a specified characteristic
-            Console.WriteLine("\nUNDER CONSTRUCTION - please check back next month to see progress.");
+            string dogCharacteristic = "";//delcaration
+            while (dogCharacteristic == "")
+            {
+                Console.WriteLine($"\nEnter one desired dog characteristics to search for");
+                readResult = Console.ReadLine();//gathers user input
+                if (readResult != null)
+                {
+                    dogCharacteristic = readResult.ToLower().Trim();
+                }
+            }
+
+            string dogDescription = "";//new declare
+            bool noMatchesDog = true;
+
+            for (int i = 0; i < maxPets; i++)//loop to find matching animal
+            {
+                bool dogMatch = true;
+
+                if (ourAnimals[i, 1].Contains("dog"))
+                {
+                    if (dogMatch == true)
+                    {
+                        dogDescription = ourAnimals[i, 4] + "\n" + ourAnimals[i, 5];
+                        if (dogDescription.Contains(dogCharacteristic))
+                        {
+                            Console.WriteLine($"\nOur dog {ourAnimals[i, 3]} is a match!");
+                            Console.WriteLine(dogDescription);
+                            noMatchesDog = false;
+                        }
+                    }
+                }
+            }
+            if (noMatchesDog)
+                {
+                    Console.WriteLine("None of our dogs are a match found for: " + dogCharacteristic);
+                }
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
             break;
