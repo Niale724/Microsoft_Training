@@ -33,7 +33,26 @@ while (!shouldExit)
         Console.Write("Console was resized. Program exiting.");
         shouldExit = true;
     }
+
+    if (PlayerIsSick())
+    {
+        FreezePlayer();
+    }
+    else if (PlayerIsFaster())
+    {
+        Move(3); 
+    }
+    else
+    {
+        Move(); 
+    }
+    
     Move();
+    if (GotFood())
+    {
+        ChangePlayer();
+        ShowFood();  
+    }
 }
 
 // Returns true if the Terminal was resized 
@@ -95,6 +114,12 @@ void Move(int speed = 1, bool otherKeysExit = true)
         case ConsoleKey.Escape:
             shouldExit = true;
             break;
+        case ConsoleKey.LeftArrow:
+            playerX -= speed;
+        break;
+        case ConsoleKey.RightArrow:
+            playerX += speed;
+            break;
         default:
             shouldExit = otherKeysExit;
             break;
@@ -123,4 +148,26 @@ void InitializeGame()
     ShowFood();
     Console.SetCursorPosition(0, 0);
     Console.Write(player);
+}
+
+// player location and food location match check
+bool GotFood()
+{
+    return playerX == foodX && playerY == foodY;
+}
+
+bool PlayerIsSick()
+{
+    return player == "(X_X)";
+}
+
+bool PlayerIsFaster()
+{
+    return player == "(^-^)";
+}
+
+void FreezePlayer()
+{
+    System.Threading.Thread.Sleep(1000); // 1 second
+    player = "('-')"; // ∑OAO!!!
 }
